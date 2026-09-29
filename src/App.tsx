@@ -1,10 +1,10 @@
 import { useState, useReducer } from "react";
 import "./App.css";
+import { ChatWindow } from "./components/ChatWindow/ChatWindow";
 import { CreateChatModal } from "./components/CreateChatModal/CreateChatModal";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { useAuth } from "./hooks/useAuth";
-import { formatPhone } from "./lib/format";
 import { chatReducer, initialState } from "./store/chatReducer";
 
 function App() {
@@ -51,7 +51,18 @@ function App() {
         onSelectChat={(chatId) => dispatch({ type: "selectChat", chatId })}
         onCreateChat={() => setIsCreateChatOpen(true)}
       />
-      <main className="main">{activeChat ? formatPhone(activeChat.phone) : "Выберите чат"}</main>
+      <main className="main">
+        {activeChat ? (
+          <ChatWindow
+            chat={activeChat}
+            credentials={credentials}
+            messages={state.messagesByChat[activeChat.chatId] ?? []}
+            onMessageSent={(message) => dispatch({ type: "messageAdded", message })}
+          />
+        ) : (
+          "Выберите чат"
+        )}
+      </main>
       <CreateChatModal
         isOpen={isCreateChatOpen}
         credentials={credentials}
