@@ -1,8 +1,12 @@
 :root {
   --text-primary: #060708;
   --text-secondary: #060708ad;
+  --button-primary: #007aff;
+  --button-secondary: #e9ebf1;
 
   --bg: #fff;
+  --bg-secondary: #9feaff;
+  --bubbles-background-bubble: #e9fdff;
 
   --font:
     -apple-system, BlinkMacSystemFont, "Roboto", system-ui, Avenir, Helvetica, Arial,

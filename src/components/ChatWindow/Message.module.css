@@ -1,0 +1,40 @@
+.rowIn,
+.rowOut {
+  display: flex;
+  padding: 2px 16px;
+}
+
+.rowIn {
+  justify-content: flex-start;
+}
+
+.rowOut {
+  justify-content: flex-end;
+}
+
+.bubbleIn,
+.bubbleOut {
+  max-width: min(560px, 75%);
+  padding: 8px 12px;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.bubbleIn,
+.bubbleOut {
+  background: var(--bubbles-background-bubble);
+  color: var(--text-primary);
+}
+
+.bubbleIn {
+  border-bottom-left-radius: 4px;
+}
+
+.bubbleOut {
+  border-bottom-right-radius: 4px;
+}
+
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
