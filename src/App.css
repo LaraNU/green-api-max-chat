@@ -1,8 +1,33 @@
-.logoutBtn {
-  background-color: var(--button-secondary);
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: #81bdfdb3;
+  background-image: url("./assets/bg-chat.svg");
+}
+
+.logout {
+  background: var(--button-secondary);
   color: var(--text-primary);
   border: none;
   border-radius: 20px;
-  padding: 12px 22px;
-  font: inherit;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  border-right: 1px solid #0c0d0e29;
+  padding: 5px;
+  display: flex;
+  align-items: end;
 }
