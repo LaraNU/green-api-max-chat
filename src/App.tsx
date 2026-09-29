@@ -1,13 +1,16 @@
-import { useReducer } from "react";
+import { useState, useReducer } from "react";
 import "./App.css";
+import { CreateChatModal } from "./components/CreateChatModal/CreateChatModal";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { useAuth } from "./hooks/useAuth";
+import { formatPhone } from "./lib/format";
 import { chatReducer, initialState } from "./store/chatReducer";
 
 function App() {
   const { credentials, isLoading, error, login, logout } = useAuth();
   const [state, dispatch] = useReducer(chatReducer, initialState);
+  const [isCreateChatOpen, setIsCreateChatOpen] = useState(false);
 
   if (!credentials) {
     return <LoginForm onLogin={login} isLoading={isLoading} error={error} />;
@@ -46,8 +49,15 @@ function App() {
         activeChatId={state.activeChatId}
         messagesByChat={state.messagesByChat}
         onSelectChat={(chatId) => dispatch({ type: "selectChat", chatId })}
+        onCreateChat={() => setIsCreateChatOpen(true)}
       />
-      <main className="main">{activeChat ? activeChat.name : "Выберите чат"}</main>
+      <main className="main">{activeChat ? formatPhone(activeChat.phone) : "Выберите чат"}</main>
+      <CreateChatModal
+        isOpen={isCreateChatOpen}
+        credentials={credentials}
+        onClose={() => setIsCreateChatOpen(false)}
+        onCreated={(chat) => dispatch({ type: "addChat", chat })}
+      />
     </div>
   );
 }

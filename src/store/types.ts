@@ -3,7 +3,6 @@ import type { Message } from "../api/types";
 export type Chat = {
   chatId: string;
   phone: string;
-  name: string;
 };
 
 export type State = {

@@ -62,14 +62,9 @@
   background: var(--button-secondary);
 }
 
-.name {
+.phone {
   font-weight: 600;
   color: var(--text-primary);
-}
-
-.phone {
-  font-size: 13px;
-  color: var(--text-secondary);
 }
 
 .lastMessage {
