@@ -12,17 +12,24 @@ type ChatWindowProps = {
   onMessageSent: (message: Message) => void;
 };
 
-export function ChatWindow({ chat, credentials, messages, onMessageSent }: ChatWindowProps) {
+export function ChatWindow({
+  chat,
+  credentials,
+  messages,
+  onMessageSent,
+}: ChatWindowProps) {
   return (
     <div className={styles.window}>
       <ChatHeader phone={chat.phone} />
-      <MessagesList messages={messages} />
-      <MessageInput
-        key={chat.chatId}
-        credentials={credentials}
-        chatId={chat.chatId}
-        onSent={onMessageSent}
-      />
+      <div className={styles.wrapper}>
+        <MessagesList messages={messages} />
+        <MessageInput
+          key={chat.chatId}
+          credentials={credentials}
+          chatId={chat.chatId}
+          onSent={onMessageSent}
+        />
+      </div>
     </div>
   );
 }

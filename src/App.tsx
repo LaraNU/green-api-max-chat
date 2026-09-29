@@ -1,10 +1,11 @@
-import { useState, useReducer } from "react";
+import { useCallback, useState, useReducer } from "react";
 import "./App.css";
 import { ChatWindow } from "./components/ChatWindow/ChatWindow";
 import { CreateChatModal } from "./components/CreateChatModal/CreateChatModal";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { useAuth } from "./hooks/useAuth";
+import { usePolling } from "./hooks/usePolling";
 import { chatReducer, initialState } from "./store/chatReducer";
 
 function App() {
@@ -12,13 +13,15 @@ function App() {
   const [state, dispatch] = useReducer(chatReducer, initialState);
   const [isCreateChatOpen, setIsCreateChatOpen] = useState(false);
 
-  if (!credentials) {
-    return <LoginForm onLogin={login} isLoading={isLoading} error={error} />;
-  }
-
-  function handleLogout() {
+  const handleLogout = useCallback(() => {
     logout();
     dispatch({ type: "reset" });
+  }, [logout, dispatch]);
+
+  usePolling(credentials, dispatch, handleLogout);
+
+  if (!credentials) {
+    return <LoginForm onLogin={login} isLoading={isLoading} error={error} />;
   }
 
   const activeChat = state.chats.find((chat) => chat.chatId === state.activeChatId);
@@ -52,15 +55,13 @@ function App() {
         onCreateChat={() => setIsCreateChatOpen(true)}
       />
       <main className="main">
-        {activeChat ? (
+        {activeChat && (
           <ChatWindow
             chat={activeChat}
             credentials={credentials}
             messages={state.messagesByChat[activeChat.chatId] ?? []}
             onMessageSent={(message) => dispatch({ type: "messageAdded", message })}
           />
-        ) : (
-          "Выберите чат"
         )}
       </main>
       <CreateChatModal

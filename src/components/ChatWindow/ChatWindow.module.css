@@ -5,3 +5,12 @@
   flex-direction: column;
   overflow: hidden;
 }
+
+.wrapper {
+  height: 100%;
+  max-width: 740px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
+}

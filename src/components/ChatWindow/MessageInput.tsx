@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { FormEvent, KeyboardEvent } from "react";
+import type { KeyboardEvent, SubmitEvent } from "react";
 import { getErrorMessage } from "../../api/errors";
 import { fromSent, sendMessage } from "../../api/greenApi";
 import type { Credentials, Message } from "../../api/types";
@@ -27,8 +27,9 @@ export function MessageInput({ credentials, chatId, onSent }: MessageInputProps)
     setError(null);
 
     try {
-      const { idMessage } = await sendMessage(credentials, chatId, text);
-      onSent(fromSent(chatId, text, idMessage));
+      const message = text.trim();
+      const { idMessage } = await sendMessage(credentials, chatId, message);
+      onSent(fromSent(chatId, message, idMessage));
       setText("");
     } catch (err) {
       setError(getErrorMessage(err));
@@ -37,7 +38,7 @@ export function MessageInput({ credentials, chatId, onSent }: MessageInputProps)
     }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     void handleSend();
   }
@@ -60,14 +61,20 @@ export function MessageInput({ credentials, chatId, onSent }: MessageInputProps)
             onChange={(event) => setText(event.target.value)}
             onKeyDown={handleKeyDown}
             rows={1}
+            placeholder="Сообщение"
           />
-          <button type="submit" className={styles.send} disabled={!canSend}>
+          <button
+            type="submit"
+            className={styles.send}
+            disabled={!canSend}
+            aria-label="Отправить"
+          >
             <svg
-              xmlns="http://w3.org"
               viewBox="0 0 24 24"
               width="24"
               height="24"
               fill="currentColor"
+              aria-hidden="true"
             >
               <path d="M12 4L4 12h5v8h6v-8h5L12 4z" />
             </svg>
