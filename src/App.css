@@ -1,0 +1,8 @@
+.logoutBtn {
+  background-color: var(--button-secondary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 20px;
+  padding: 12px 22px;
+  font: inherit;
+}

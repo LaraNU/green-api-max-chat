@@ -3,8 +3,16 @@ export type Credentials = {
   apiTokenInstance: string;
 };
 
+export type StateInstance =
+  | "authorized"
+  | "notAuthorized"
+  | "starting"
+  | "blocked"
+  | "pendingPassword"
+  | "suspended";
+
 export type GetStateInstanceResponse = {
-  stateInstance: string;
+  stateInstance: StateInstance;
 };
 
 export type CheckAccountResponse = {
